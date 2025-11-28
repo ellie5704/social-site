@@ -14,8 +14,6 @@ export default function Navbar() {
 
     const [isOpen, setIsOpen] = useState(false);
     const [resource, setResource] = useState();
-=======
-    const [isOpen, setIsOpen] = useState(false)
     
 
     return (
@@ -59,12 +57,32 @@ export default function Navbar() {
 
                     <div className="border-b px-4 py-3 flex justify-between items-center">
                         <h1 className=" text-black font-semibold">Create new post</h1>
-                        <button onClick={() => setIsOpen(false)} className="text-black hover:text-gray-700">
+                        <button onClick={() => setIsOpen(false)} className="text-black hover:text-gray-700 px-">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                             </svg>
                         </button>
+
+
+ {/* <CldUploadButton
+        onSuccess={(result, widget) => {
+          // save uploaded resource info (remove invalid "etc" reference)
+          setResource(result?.info);
+          widget?.close();
+          console.log(result);
+        }}
+        signatureEndpoint="/api/sign-cloudinary-params"
+        uploadPreset="cat"
+      >
+        Upload to Cloudinary
+    // //   </CldUploadButton>
+    // 
+    I feel like this needs to be merged with the button above somehow because it's doing what we need without the broken button, but just in the wrong place (this code is from page.js) */}  
+
+
                     </div>
+
+                    
 
                     <div className="flex flex-col items-center justify-center h-full px-6 py-8 text-center">
                         <div className="flex justify-center text-gray-600">
@@ -76,15 +94,9 @@ export default function Navbar() {
 
                         <p className="text-gray-500">Upload photos and videos here</p>
 
-                        <div className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg flex items-center justify-center h-8">   
+                        <div className="mt-6 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">   
                             <Feed />
                         </div>
-
-                        <p className="text-gray-500">Drag photos and videos here</p>
-
-
-                        <button className="mt-6 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Select from computer</button>
-                        
 
 
                     </div>
