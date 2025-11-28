@@ -15,6 +15,8 @@ export default function Home() {
     { image: "https://images.unsplash.com/photo-1531704118376-ec637130bfa0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", name: "ChatNoir", unread: false },
     { image: "https://images.unsplash.com/photo-1698797760002-63f924f7e933?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y2F0JTIwdHJhdmVsfGVufDB8fDB8fHww", name: "Hi_Flyin_Paws", unread: true },
   ];
+
+  const [posts, setPosts] = useState([]);
   
   const [resource, setResource] = useState();
   useEffect(() => {

@@ -11,9 +11,9 @@ import Feed from "@/components/Feed"
 
 export default function Navbar() {
     const pathname = usePathname();
-
     const [isOpen, setIsOpen] = useState(false);
     const [resource, setResource] = useState();
+    const [openModal, setOpenModal] = useState(null);
     
 
     return (
@@ -33,7 +33,16 @@ export default function Navbar() {
                 Home</a>
 
                 <button 
-                    onClick={() => setIsOpen(true)}
+                    onClick={() => setOpenModal("image")}
+                    className="flex hover:bg-gray-100 p-2 rounded"> 
+
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 mr-2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                Create</button>
+
+                <button 
+                    onClick={() => setOpenModal("text")}
                     className="flex hover:bg-gray-100 p-2 rounded"> 
 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 mr-2">
@@ -50,36 +59,18 @@ export default function Navbar() {
 
                 <Modal 
                     ariaHideApp={false}
-                    isOpen={isOpen} 
-                    onRequestClose={() => setIsOpen(false)}
+                    isOpen={openModal === "image"} 
+                    onRequestClose={() => setOpenModal(null)}
                     className="bg-white rounded-xl shadow-lg w-full max-w-3xl h-[80%] mx-auto overflow-hidden"
                     overlayClassName="fixed inset-0 bg-black/40 flex items-center justify-center">
 
                     <div className="border-b px-4 py-3 flex justify-between items-center">
                         <h1 className=" text-black font-semibold">Create new post</h1>
-                        <button onClick={() => setIsOpen(false)} className="text-black hover:text-gray-700 px-">
+                        <button onClick={() => setOpenModal(false)} className="text-black hover:text-gray-700 px-">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                             </svg>
                         </button>
-
-
- {/* <CldUploadButton
-        onSuccess={(result, widget) => {
-          // save uploaded resource info (remove invalid "etc" reference)
-          setResource(result?.info);
-          widget?.close();
-          console.log(result);
-        }}
-        signatureEndpoint="/api/sign-cloudinary-params"
-        uploadPreset="cat"
-      >
-        Upload to Cloudinary
-    // //   </CldUploadButton>
-    // 
-    I feel like this needs to be merged with the button above somehow because it's doing what we need without the broken button, but just in the wrong place (this code is from page.js) */}  
-
-
                     </div>
 
                     
@@ -91,16 +82,57 @@ export default function Navbar() {
                             </svg>
                         </div>
 
-
                         <p className="text-gray-500">Upload photos and videos here</p>
 
-                        <div className="mt-6 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">   
+                        <div className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">   
                             <Feed />
                         </div>
+                    </div>
+                </Modal>
 
+                <Modal 
+                    ariaHideApp={false}
+                    isOpen={openModal === "text"} 
+                    onRequestClose={() => setOpenModal(null)}
+                    className="bg-white rounded-xl shadow-lg w-full max-w-3xl h-[80%] mx-auto overflow-hidden"
+                    overlayClassName="fixed inset-0 bg-black/40 flex items-center justify-center">
 
+                    <div className="border-b px-4 py-3 flex justify-between items-center">
+                        <h1 className=" text-black font-semibold">Create new post</h1>
+                        <button onClick={() => setOpenModal(false)} className="text-black hover:text-gray-700 px-">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                            </svg>
+                        </button>
                     </div>
 
+                    
+
+                    <div className="flex flex-col h-full p-5">
+                        <form>
+                            <div>
+                                <label className="block text-sm font-medium text-black p-5">Username:</label>
+                                <input type="text"
+                                       placeholder="Enter your username"
+                                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 text-black"
+                                       required
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-black p-5">Enter text:</label>
+                                <textarea rows="4"
+                                          placeholder="meow meow meow, meow meow"
+                                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 text-black"
+                                          required
+                                />
+                            </div>
+                            <button type="submit" className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
+                                Post
+                            </button>
+                        </form>
+
+                        
+                    </div>
                 </Modal>
             
 
