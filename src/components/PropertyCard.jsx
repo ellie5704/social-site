@@ -29,7 +29,12 @@ export default function PropertyCard({
         <div className="ml-auto">{meatballMenu}</div>
     </div>
 
-    <Image src = {image} alt={accountName} width={300} height={400} className="rounded-md"/>
+    <Image 
+      src = {image} 
+      alt={accountName} 
+      width={300} 
+      height={400} 
+      className="rounded-md"/>
     
     <div className="flex gap-4">
 

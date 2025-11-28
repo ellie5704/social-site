@@ -4,13 +4,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
-
+import Feed from "@/components/Feed"
 
 
 export default function Navbar() {
     const pathname = usePathname();
-    const [isOpen, setIsOpen] = useState(false)
-
+    const [isOpen, setIsOpen] = useState(false);
+    const [resource, setResource] = useState();
     
 
     return (
@@ -68,11 +68,11 @@ export default function Navbar() {
                             </svg>
                         </div>
 
-                        <p className="text-gray-500">Drag photos and videos here</p>
+                        <p className="text-gray-500">Upload photos and videos here</p>
 
-
-                        <button className="mt-6 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Select from computer</button>
-                        
+                        <div className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg flex items-center justify-center h-8">   
+                            <Feed />
+                        </div>
 
                     </div>
 
