@@ -16,6 +16,49 @@ export default function Navbar() {
     const [openModal, setOpenModal] = useState(null);
     
 
+    const [postObject, setPostObject] = useState({
+        title: "",
+        description: "",
+      });
+    
+      const handleInputChange = (e) => {
+        console.log(e.target.name, e.target.value);
+        setPostObject({
+          ...postObject,
+          [e.target.name]: e.target.value
+        })
+      }
+
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const localStoragePosts = localStorage.getItem("posts")
+
+        postObject.id = Date.now().toString()
+
+        if (localStoragePosts) {
+            localStorage.setItem("posts", JSON.stringify([...JSON.parse(localStoragePosts), postObject]))
+        } else {
+            localStorage.setItem("posts", JSON.stringify([postObject]))
+        }
+
+        //  try {
+        //     const res = await fetch("https://api.cloudinary.com/v1_1/posts", {
+        //         method: "POST",
+        //         headers: { "Content-Type": "application/json" },
+        //         body: JSON.stringify(postObject),
+        //     });
+        //     if (res.ok) {
+        //         console.log("Post submitted successfully!");
+        //         setPostObject({ title: "", description: "" }); // reset form
+        //     } else {
+        //         console.error("Failed to submit post");
+        //     }
+        // } catch (err) {
+        //     console.error("Error submitting post:", err);
+        // }
+    };
+
     return (
         <div className="h-screen w-64 bg-white text-black flex flex-col p-6 border border-gray-200">
             <nav className="flex flex-col space-y-4">
@@ -39,7 +82,7 @@ export default function Navbar() {
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 mr-2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
-                Create</button>
+                Post image</button>
 
                 <button 
                     onClick={() => setOpenModal("text")}
@@ -48,7 +91,7 @@ export default function Navbar() {
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 mr-2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
-                Create</button>
+                Post text</button>
 
                 <a href="/profile" className="flex hover:bg-gray-200 p-2 rounded">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 mr-2">
@@ -109,19 +152,26 @@ export default function Navbar() {
                     
 
                     <div className="flex flex-col h-full p-5">
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div>
-                                <label className="block text-sm font-medium text-black p-5">Username:</label>
-                                <input type="text"
+                                <label htmlFor="title" className="block text-sm font-medium text-black p-5">Username:</label>
+                                <input name="title"
+                                       type="text"
                                        placeholder="Enter your username"
+                                       onChange={handleInputChange}
+                                       value={postObject.title}
+                                       id="title"
                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 text-black"
                                        required
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-black p-5">Enter text:</label>
-                                <textarea rows="4"
+                                <label htmlFor="description" className="block text-sm font-medium text-black p-5">Enter text:</label>
+                                <textarea name="description"
+                                          rows="4"
                                           placeholder="meow meow meow, meow meow"
+                                          onChange={handleInputChange}
+                                          value={postObject.description}
                                           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 text-black"
                                           required
                                 />
