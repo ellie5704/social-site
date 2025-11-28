@@ -7,6 +7,7 @@ import StoryStrip from "@/components/StoryStrip";
 import { CldImage } from "next-cloudinary";
 import { CldUploadButton } from 'next-cloudinary';
 import Feed from "@/components/Feed";
+import Navbar from "@/components/Navbar";
 
 
 export default function Home() {
@@ -16,7 +17,6 @@ export default function Home() {
     { image: "https://images.unsplash.com/photo-1698797760002-63f924f7e933?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y2F0JTIwdHJhdmVsfGVufDB8fDB8fHww", name: "Hi_Flyin_Paws", unread: true },
   ];
 
-  const [posts, setPosts] = useState([]);
   
   const [resource, setResource] = useState();
   useEffect(() => {
@@ -24,6 +24,20 @@ export default function Home() {
   }, [resource]);
 
   const [images, setImages] = useState([]);
+  
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const loadPosts = () => {
+      const storedPosts = localStorage.getItem("posts");
+      if (storedPosts) {
+        setPosts(JSON.parse(storedPosts));
+      } else {
+        setPosts([]);
+      }
+    };
+    loadPosts();
+  }, []);
  
   // Load any existing images from localStorage on first render
   useEffect(() => {
@@ -40,6 +54,10 @@ export default function Home() {
     }
 }, []);
 
+  
+
+
+
 return (
   <main>
     <div className="flex flex-col items-center justify-center min-h-screen gap-10 p-4">
@@ -47,6 +65,7 @@ return (
       <div className="w-full max-w-3xl">
         <StoryStrip stories={stories} navbarWidth={96} />
       </div>
+
 
       {
         images?.map(img => {
@@ -61,7 +80,14 @@ return (
         })
       }
 
-
+      <div>
+        {posts?.map((post) => (
+          <div key={post.id}>
+            {post.title} - {post.description}
+          </div>
+        ))}
+      </div>  
+      
 
         <PropertyCard 
           profileIcon=""
