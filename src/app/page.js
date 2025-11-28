@@ -1,6 +1,14 @@
+
+"use client"
+
+
 import PropertyCard from "@/components/PropertyCard";
+
 import Image from "next/image";
 import StoryStrip from "@/components/StoryStrip";
+import { CldImage } from "next-cloudinary";
+import { CldUploadButton } from 'next-cloudinary';
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const stories = [
@@ -10,6 +18,24 @@ export default function Home() {
   ];
 
   return (
+
+    <div>
+      <CldUploadButton
+        onSuccess={(result, widget) => {
+          // save uploaded resource info (remove invalid "etc" reference)
+          setResource(result?.info);
+          widget?.close();
+          console.log(result);
+        }}
+        signatureEndpoint="/api/sign-cloudinary-params"
+        uploadPreset="cat"
+      >
+        Upload to Cloudinary
+      </CldUploadButton>
+
+    </div>
+  );
+
 
   <div className="flex flex-col items-center justify-center min-h-screen gap-10">
     <div className="w-full max-w-3xl">
